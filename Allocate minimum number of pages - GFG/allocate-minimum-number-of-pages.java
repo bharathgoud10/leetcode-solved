@@ -35,17 +35,16 @@ class Solution
 {
     //Function to find minimum number of pages.
     static boolean solve(int arr[],int mid,int m){
-        int sum=0,cnt=0;
+        int sum=0,stu=1;
         for(int i:arr){
             if(sum+i<=mid)
             sum+=i;
             else{
-                cnt++;
+                stu++;
                 sum=i;
             }
         }
-        if(sum>0)cnt++;
-        return cnt<=m;
+        return stu<=m;
     }
     public static int findPages(int[]a,int n,int m)
     {
