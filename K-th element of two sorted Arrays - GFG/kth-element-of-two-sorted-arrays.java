@@ -45,26 +45,24 @@ class GFG {
 
 
 class Solution {
-     private int i=0,j=0;
-    long getMin(int[] a,int[] b,int n,int m){
-       
-        if(i<n && j<m){
-            if(a[i]<b[j])
-            return (long)a[i++];
-            else
-            return (long)b[j++];
-        }
-        else if(i<n)
-        return (long)a[i++];
-        else if(j<m)
-        return (long)b[j++];
-        return -1;
-    }
     public long kthElement(int arr1[], int arr2[], int n, int m, int k) {
-        long res=-1;
-        for(int i=0;i<k;i++){
-            res=getMin(arr1,arr2,n,m);
+        if(n>m)
+        return kthElement(arr2, arr1,m,n,k);
+        int si=Math.max(0,k-m),ei=Math.min(k,n);
+        while(si<=ei){
+            int m1=si+(ei-si)/2;
+            int m2=k-m1;
+            int l1=(m1==0)?Integer.MIN_VALUE:arr1[m1-1];
+            int l2=(m2==0)?Integer.MIN_VALUE:arr2[m2-1];
+            int r1=(m1==n)?Integer.MAX_VALUE:arr1[m1];
+            int r2=(m2==m)?Integer.MAX_VALUE:arr2[m2];
+            if(l1<=r2 && l2<=r1)
+            return (long)Math.max(l1,l2);
+            else if(l1>r2)
+                ei=m1-1;
+            else
+            si=m1+1;
         }
-        return res;
+        return -1;
     }
 }
