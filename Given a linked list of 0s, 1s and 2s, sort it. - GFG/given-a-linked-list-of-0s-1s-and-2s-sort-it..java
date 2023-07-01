@@ -78,32 +78,40 @@ class Node
 class Solution
 {
     //Function to sort a linked list of 0s, 1s and 2s.
+   static Node merge(Node a,Node b){
+        Node dum=new Node(-1);
+        Node curr=dum;
+        while(a!=null && b!=null){
+            if(a.data<=b.data){
+                curr.next=a;
+                a=a.next;
+            }
+            else{
+                curr.next=b;
+                b=b.next;
+            }
+            curr=curr.next;
+        }
+        if(a!=null)curr.next=a;
+        if(b!=null)curr.next=b;
+        return dum.next;
+    }
     static Node segregate(Node head)
     {
         // add your code here
-        Node curr=head;
-        int zeros=0,ones=0,twos=0;
-        while(curr!=null){
-            if(curr.data==0)zeros++;
-            else if(curr.data==1)ones++;
-            else twos++;
-            curr=curr.next;
+        if(head==null || head.next==null)
+        return head;
+        Node slow=head;
+        Node fast=head.next;
+        while(fast!=null && fast.next!=null){
+            slow=slow.next;
+            fast=fast.next.next;
         }
-        Node dum=new Node(-1);
-         curr=dum;
-        while(zeros-->0){
-            curr.next=new Node(0);
-            curr=curr.next;
-        }
-        while(ones-->0){
-            curr.next=new Node(1);
-            curr=curr.next;
-        }
-        while(twos-->0){
-            curr.next=new Node(2);
-            curr=curr.next;
-        }
-        return dum.next;
+        Node mid=slow.next;
+        slow.next=null;
+        Node left=segregate(head);
+        Node right=segregate(mid);
+        return merge(left,right);
     }
 }
 
