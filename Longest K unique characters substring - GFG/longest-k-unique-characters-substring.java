@@ -24,22 +24,24 @@ class GfG {
 class Solution {
     public int longestkSubstr(String s, int k) {
         // code here
-        int ans=-1;
-        int arr[]=new int[256];int cnt=0;
-        int n=s.length();int j=0;
+        int arr[]=new int[26];
+        int n=s.length();
+        int j=0,ans=-1,cnt=0;
         for(int i=0;i<n;i++){
             char c=s.charAt(i);
-            arr[c]++;
-            if(arr[c]==1)
+            arr[c-'a']++;
+            if(arr[c-'a']==1)
             cnt++;
             while(cnt>k){
-                char c1=s.charAt(j);
-                arr[c1]--;
-                if(arr[c1]==0)cnt--;
-                j++;
+               char c1=s.charAt(j);
+               arr[c1-'a']--;
+               if(arr[c1-'a']==0)
+                 cnt--;
+                 j++;
             }
-            if(cnt==k)
-            ans=Math.max(i-j+1,ans);
+            if(cnt==k){
+                ans=Math.max(ans,i-j+1);
+            }
         }
         return ans;
     }
